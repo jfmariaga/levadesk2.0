@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('areas', function (Blueprint $table) {
+
+            $table->id();
+
+            $table->foreignId('sociedad_id')
+                ->nullable()
+                ->constrained('sociedades')
+                ->nullOnDelete();
+
+            $table->string('nombre');
+
+            $table->string('codigo')
+                ->nullable();
+
+            $table->boolean('activo')
+                ->default(true);
+
+            $table->timestamps();
+
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('areas');
+    }
+};
