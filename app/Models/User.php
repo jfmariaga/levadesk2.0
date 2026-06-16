@@ -20,6 +20,7 @@ use App\Notifications\VerificarCorreoNotification;
 use Spatie\Permission\Traits\HasRoles;
 
 use App\Domains\Organizacion\Models\Area;
+use App\Domains\Organizacion\Models\Grupo;
 use App\Domains\Organizacion\Models\Sociedad;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -128,15 +129,15 @@ class User extends Authenticatable implements MustVerifyEmail
     |--------------------------------------------------------------------------
     */
 
-    // public function grupos(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(
-    //         Grupo::class,
-    //         'grupo_user',
-    //         'user_id',
-    //         'grupo_id'
-    //     );
-    // }
+    public function grupos(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Grupo::class,
+            'grupo_user',
+            'user_id',
+            'grupo_id'
+        );
+    }
 
     // /*
     // |--------------------------------------------------------------------------

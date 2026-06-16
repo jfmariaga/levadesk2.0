@@ -1,13 +1,13 @@
 <div>
-                    <x-admin.breadcrumb :items="[
-                    [
-                        'label' => 'Portal',
-                        'route' => route('dashboard'),
-                    ],
-                    [
-                        'label' => 'Administración',
-                    ],
-                ]" />
+    <x-admin.breadcrumb :items="[
+        [
+            'label' => 'Portal',
+            'route' => route('dashboard'),
+        ],
+        [
+            'label' => 'Administración',
+        ],
+    ]" />
     <div class="space-y-10">
 
         {{-- CATÁLOGOS --}}
@@ -25,19 +25,26 @@
                     icon="{{ asset('images/modules/tipo-solicitud.png') }}" />
 
                 <x-admin.admin-card title="Categorías" description="Clasificación principal de servicios."
-                    route="admin.categorias.index" icon="{{ asset('images/modules/categoria.png') }}" />
+                    href="{{ route('admin.categorias.index') }}" icon="{{ asset('images/modules/categoria.png') }}" />
 
                 <x-admin.admin-card title="Subcategorías" description="Detalle operativo de cada categoría."
-                    route="admin.subcategorias.index" icon="{{ asset('images/modules/subcategoria.png') }}" />
+                    href="{{ route('admin.subcategorias.index') }}"
+                    icon="{{ asset('images/modules/subcategoria.png') }}" />
 
                 <x-admin.admin-card title="Estados" description="Estados disponibles para workflows."
-                    route="admin.estados.index" icon="{{ asset('images/modules/estado.png') }}" />
+                    href="{{ route('admin.estados.index') }}" icon="{{ asset('images/modules/estado.png') }}" />
 
                 <x-admin.admin-card title="Urgencias" description="Niveles de urgencia y puntuación."
-                    route="admin.urgencias.index" icon="{{ asset('images/modules/urgencia.png') }}" />
+                    href="{{ route('admin.urgencias.index') }}" icon="{{ asset('images/modules/urgencia.png') }}" />
 
                 <x-admin.admin-card title="Impactos" description="Niveles de impacto y puntuación."
-                    route="admin.impactos.index" icon="{{ asset('images/modules/impacto.png') }}" />
+                    href="{{ route('admin.impactos.index') }}" icon="{{ asset('images/modules/impacto.png') }}" />
+
+                <x-admin.admin-card title="Sociedades" description="Gestión de sociedades y compañías."
+                    href="{{ route('admin.sociedades.index') }}" icon="{{ asset('images/modules/sociedad.png') }}" />
+
+                <x-admin.admin-card title="Grupos" description="Equipos responsables de atención y soporte."
+                    href="{{ route('admin.grupos.index') }}" icon="{{ asset('images/modules/grupo.png') }}" />
 
             </div>
 

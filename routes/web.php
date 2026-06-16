@@ -1,6 +1,11 @@
 <?php
 
+use App\Livewire\Admin\Catalog\CategoriaCrud;
+use App\Livewire\Admin\Catalog\EstadoCrud;
+use App\Livewire\Admin\Catalog\ImpactoCrud;
+use App\Livewire\Admin\Catalog\SubcategoriaCrud;
 use App\Livewire\Admin\Catalog\TipoSolicitudCrud;
+use App\Livewire\Admin\Catalog\UrgenciaCrud;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Auth\Login;
@@ -10,6 +15,9 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use App\Livewire\Admin\DashboardAdmin;
+use App\Livewire\Admin\Organization\SociedadCrud;
+use App\Livewire\Admin\Organization\GrupoCrud;
+
 /*
 |--------------------------------------------------------------------------
 | Guest
@@ -123,9 +131,45 @@ Route::middleware(['auth'])->group(function () {
         '/administracion',
         DashboardAdmin::class
     )->name('admin.dashboard');
-    
+
     Route::get(
         '/administracion/tipos-solicitud',
         TipoSolicitudCrud::class
     )->name('admin.tipos-solicitud.index');
+
+
+    Route::get(
+        '/administracion/categorias',
+        CategoriaCrud::class
+    )->name('admin.categorias.index');
+
+    Route::get(
+        '/administracion/subcategorias',
+        SubcategoriaCrud::class
+    )->name('admin.subcategorias.index');
+
+    Route::get(
+        '/administracion/estados',
+        EstadoCrud::class
+    )->name('admin.estados.index');
+
+    Route::get(
+        '/administracion/urgencias',
+        UrgenciaCrud::class
+    )->name('admin.urgencias.index');
+
+    Route::get(
+        '/administracion/impactos',
+        ImpactoCrud::class
+    )->name('admin.impactos.index');
+
+    Route::get(
+        '/administracion/sociedades',
+        SociedadCrud::class
+    )->name('admin.sociedades.index');
+
+    Route::get(
+        '/administracion/grupos',
+        GrupoCrud::class
+    )->name('admin.grupos.index');
 });
