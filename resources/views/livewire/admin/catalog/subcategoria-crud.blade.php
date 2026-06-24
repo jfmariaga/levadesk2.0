@@ -213,51 +213,61 @@
 
     </div>
 
-    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}">
+    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}" :title="$editingId ? 'Editar Subcategoría' : 'Nueva Subcategoría'"
+        subtitle="Configuración de subcategorías y categorías asociadas">
 
         <div class="space-y-6" wire:key="form-{{ $editingId ?? 'new' }}">
 
-            <h2 class="text-xl font-bold">
+            {{-- INFORMACIÓN GENERAL --}}
+            <div class="rounded-2xl border border-slate-200 bg-white p-5">
 
-                {{ $editingId ? 'Editar' : 'Nueva' }}
-                Subcategoría
+                <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
 
-            </h2>
+                    Información General
 
-            <x-ui.select wire:model.live="categoria_id" label="Categoría">
+                </h3>
 
-                <option value="">
-                    Seleccione una categoría
-                </option>
+                <div class="space-y-4">
 
-                @foreach ($categorias as $categoria)
-                    <option value="{{ $categoria->id }}">
+                    <x-ui.select wire:model.live="categoria_id" label="Categoría">
 
-                        [{{ $categoria->tipoSolicitud?->nombre }}]
-                        {{ $categoria->nombre }}
+                        <option value="">
+                            Seleccione una categoría
+                        </option>
 
-                    </option>
-                @endforeach
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}">
 
-            </x-ui.select>
+                                [{{ $categoria->tipoSolicitud?->nombre }}]
+                                {{ $categoria->nombre }}
 
-            <x-ui.input wire:model.live="nombre" label="Nombre" />
+                            </option>
+                        @endforeach
 
-            <x-ui.input wire:model.live="codigo" label="Código" />
+                    </x-ui.select>
 
-            <x-ui.textarea wire:model.live="descripcion" label="Descripción" />
+                    <x-ui.input wire:model.live="nombre" label="Nombre" />
 
-            <div class="flex gap-3">
+                    <x-ui.input wire:model.live="codigo" label="Código" />
 
-                <button wire:click="save" type="button" class="rounded-xl bg-primary px-4 py-2 text-white">
+                    <x-ui.textarea wire:model.live="descripcion" label="Descripción" />
 
-                    Guardar
+                </div>
+
+            </div>
+
+            {{-- ACCIONES --}}
+            <div class="flex justify-end gap-3 border-t border-slate-200 pt-4">
+
+                <button wire:click="closeDrawer" type="button" class="rounded-xl border border-slate-300 px-5 py-2">
+
+                    Cancelar
 
                 </button>
 
-                <button wire:click="closeDrawer" type="button" class="rounded-xl border px-4 py-2">
+                <button wire:click="save" type="button" class="rounded-xl bg-primary px-5 py-2 text-white">
 
-                    Cancelar
+                    Guardar
 
                 </button>
 

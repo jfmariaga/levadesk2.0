@@ -10,16 +10,16 @@
             'route' => route('admin.dashboard'),
         ],
         [
-            'label' => 'Categorías',
+            'label' => 'ANS',
         ],
     ]" />
 
-    <x-admin.crud-toolbar title="Categorías" buttonText="Nueva Categoría" />
+    <x-admin.crud-toolbar title="ANS" buttonText="Nuevo ANS" />
 
     {{-- BUSCADOR --}}
     <div class="mb-6">
 
-        <input wire:model.live="search" type="text" placeholder="Buscar categoría..."
+        <input wire:model.live="search" type="text" placeholder="Buscar ANS..."
             class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm">
 
     </div>
@@ -30,9 +30,9 @@
         <div class="text-sm text-slate-500">
 
             Mostrando
-            {{ $categorias->count() }}
+            {{ $ans->count() }}
             de
-            {{ $categorias->total() }}
+            {{ $ans->total() }}
             registros
 
         </div>
@@ -40,11 +40,13 @@
         <div class="flex items-center gap-2">
 
             <span class="text-sm text-slate-500">
+
                 Mostrar
+
             </span>
 
             <select wire:model.live="perPage"
-                class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20">
+                class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium shadow-sm">
 
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -54,7 +56,9 @@
             </select>
 
             <span class="text-sm text-slate-500">
+
                 registros
+
             </span>
 
         </div>
@@ -68,31 +72,51 @@
             <tr class="border-b bg-slate-50">
 
                 <th class="w-20 px-4 py-3 text-left">
+
                     ID
+
                 </th>
 
                 <th class="px-4 py-3 text-left">
+
                     Tipo Solicitud
+
                 </th>
 
                 <th class="px-4 py-3 text-left">
-                    Nombre
+
+                    Nivel
+
                 </th>
 
                 <th class="px-4 py-3 text-left">
-                    Código
+
+                    Horario
+
                 </th>
 
                 <th class="px-4 py-3 text-left">
-                    Estado
+
+                    Asignación
+
                 </th>
 
                 <th class="px-4 py-3 text-left">
-                    Actualizado
+
+                    Aceptación
+
+                </th>
+
+                <th class="px-4 py-3 text-left">
+
+                    Resolución
+
                 </th>
 
                 <th class="px-4 py-3 text-right">
+
                     Acciones
+
                 </th>
 
             </tr>
@@ -101,46 +125,52 @@
 
         <tbody>
 
-            @forelse ($categorias as $categoria)
-                <tr wire:key="categoria-{{ $categoria->id }}" class="border-b border-slate-100">
-
-                    <td class="px-4 py-3 text-slate-500">
-                        {{ $categoria->id }}
-                    </td>
-
-                    <td class="px-4 py-3">
-                        {{ $categoria->tipoSolicitud?->nombre }}
-                    </td>
-
-                    <td class="px-4 py-3">
-                        {{ $categoria->nombre }}
-                    </td>
-
-                    <td class="px-4 py-3">
-                        {{ $categoria->codigo }}
-                    </td>
-
-                    <td class="px-4 py-3">
-
-                        @if ($categoria->estado == 0)
-                            <span class="rounded-full bg-green-100 px-3 py-1 text-xs text-green-700">
-
-                                Activo
-
-                            </span>
-                        @else
-                            <span class="rounded-full bg-red-100 px-3 py-1 text-xs text-red-700">
-
-                                Inactivo
-
-                            </span>
-                        @endif
-
-                    </td>
+            @forelse ($ans as $item)
+                <tr wire:key="ans-{{ $item->id }}" class="border-b border-slate-100">
 
                     <td class="px-4 py-3 text-slate-500">
 
-                        {{ $categoria->updated_at?->format('d/m/Y') }}
+                        {{ $item->id }}
+
+                    </td>
+
+                    <td class="px-4 py-3">
+
+                        {{ $item->tipoSolicitud?->nombre }}
+
+                    </td>
+
+                    <td class="px-4 py-3">
+
+                        <span class="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-700">
+
+                            {{ $item->nivel }}
+
+                        </span>
+
+                    </td>
+
+                    <td class="px-4 py-3">
+
+                        {{ $item->h_atencion }}
+
+                    </td>
+
+                    <td class="px-4 py-3">
+
+                        {{ $this->formatearTiempo($item->t_asignacion_segundos) }}
+
+                    </td>
+
+                    <td class="px-4 py-3">
+
+                        {{ $this->formatearTiempo($item->t_aceptacion_segundos) }}
+
+                    </td>
+
+                    <td class="px-4 py-3">
+
+                        {{ $this->formatearTiempo($item->t_resolucion_segundos) }}
 
                     </td>
 
@@ -148,21 +178,10 @@
 
                         <div class="flex justify-end gap-2">
 
-                            <button wire:click="edit({{ $categoria->id }})" type="button"
+                            <button wire:click="edit({{ $item->id }})" type="button"
                                 class="rounded-lg bg-blue-50 px-3 py-2 text-blue-600 transition hover:bg-blue-100">
 
                                 ✏️
-
-                            </button>
-
-                            <button wire:click="toggle({{ $categoria->id }})" type="button"
-                                title="{{ $categoria->estado == 0 ? 'Desactivar' : 'Activar' }}"
-                                class="rounded-lg px-3 py-2 transition
-                                {{ $categoria->estado == 0
-                                    ? 'bg-red-50 text-red-600 hover:bg-red-100'
-                                    : 'bg-green-50 text-green-600 hover:bg-green-100' }}">
-
-                                {{ $categoria->estado == 0 ? '🔒' : '🔓' }}
 
                             </button>
 
@@ -176,7 +195,7 @@
 
                 <tr>
 
-                    <td colspan="7" class="py-12 text-center text-slate-500">
+                    <td colspan="8" class="py-12 text-center text-slate-500">
 
                         No se encontraron registros.
 
@@ -191,27 +210,26 @@
 
     <div class="mt-4">
 
-        {{ $categorias->links() }}
+        {{ $ans->links() }}
 
     </div>
 
-    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}" :title="$editingId ? 'Editar Categoría' : 'Nueva Categoría'"
-        subtitle="Configuración de categorías y tipos de solicitud">
+    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}" :title="$editingId ? 'Editar ANS' : 'Nuevo ANS'"
+        subtitle="Configuración de acuerdos de nivel de servicio">
 
         <div class="space-y-6" wire:key="form-{{ $editingId ?? 'new' }}">
 
-            {{-- INFORMACIÓN GENERAL --}}
             <div class="rounded-2xl border border-slate-200 bg-white p-5">
 
                 <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
 
-                    Información General
+                    Configuración ANS
 
                 </h3>
 
                 <div class="space-y-4">
 
-                    <x-ui.select wire:model.live="solicitud_id" label="Tipo de Solicitud">
+                    <x-ui.select wire:model.live="solicitud_id" label="Tipo Solicitud">
 
                         <option value="">
                             Seleccione...
@@ -227,17 +245,44 @@
 
                     </x-ui.select>
 
-                    <x-ui.input wire:model.live="nombre" label="Nombre" />
+                    <x-ui.select wire:model.live="nivel" label="Nivel">
 
-                    <x-ui.input wire:model.live="codigo" label="Código" />
+                        <option value="">
+                            Seleccione...
+                        </option>
 
-                    <x-ui.textarea wire:model.live="descripcion" label="Descripción" />
+                        @foreach ($niveles as $nivel)
+                            <option value="{{ $nivel }}">
+
+                                {{ $nivel }}
+
+                            </option>
+                        @endforeach
+
+                    </x-ui.select>
+
+                    <x-ui.select wire:model.live="h_atencion" label="Horario">
+
+                        @foreach ($horarios as $horario)
+                            <option value="{{ $horario }}">
+
+                                {{ $horario }}
+
+                            </option>
+                        @endforeach
+
+                    </x-ui.select>
+
+                    <x-ui.input wire:model.live="t_asignacion" type="number" label="Tiempo Asignación (minutos)" />
+
+                    <x-ui.input wire:model.live="t_aceptacion" type="number" label="Tiempo Aceptación (minutos)" />
+
+                    <x-ui.input wire:model.live="t_resolucion" type="number" label="Tiempo Resolución (minutos)" />
 
                 </div>
 
             </div>
 
-            {{-- ACCIONES --}}
             <div class="flex justify-end gap-3 border-t border-slate-200 pt-4">
 
                 <button wire:click="closeDrawer" type="button" class="rounded-xl border border-slate-300 px-5 py-2">

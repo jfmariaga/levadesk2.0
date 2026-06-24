@@ -17,6 +17,11 @@ use Illuminate\Auth\Events\Verified;
 use App\Livewire\Admin\DashboardAdmin;
 use App\Livewire\Admin\Organization\SociedadCrud;
 use App\Livewire\Admin\Organization\GrupoCrud;
+use App\Livewire\Admin\Organization\AplicacionCrud;
+use App\Livewire\Admin\Organization\FlujoTerceroCrud;
+use App\Livewire\Admin\Organization\TerceroCrud;
+use App\Livewire\Admin\Workflow\AsignacionSubcategoria;
+use App\Livewire\Admin\SLA\AnsCrud;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,4 +177,29 @@ Route::middleware(['auth'])->group(function () {
         '/administracion/grupos',
         GrupoCrud::class
     )->name('admin.grupos.index');
+
+    Route::get(
+        '/administracion/aplicaciones',
+        AplicacionCrud::class
+    )->name('admin.aplicaciones.index');
+
+    Route::get(
+        '/administracion/asignaciones',
+        AsignacionSubcategoria::class
+    )->name('admin.asignaciones.index');
+
+    Route::get(
+        '/administracion/ans',
+        AnsCrud::class
+    )->name('admin.ans.index');
+
+    Route::get(
+        '/administracion/terceros',
+        TerceroCrud::class
+    )->name('admin.terceros.index');
+
+    Route::get(
+        '/administracion/flujos-terceros',
+        FlujoTerceroCrud::class
+    )->name('admin.flujos-terceros.index');
 });

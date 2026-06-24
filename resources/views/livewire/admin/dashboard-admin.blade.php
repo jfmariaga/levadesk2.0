@@ -46,6 +46,25 @@
                 <x-admin.admin-card title="Grupos" description="Equipos responsables de atención y soporte."
                     href="{{ route('admin.grupos.index') }}" icon="{{ asset('images/modules/grupo.png') }}" />
 
+                <x-admin.admin-card title="Aplicaciones" description="Gestión de aplicaciones y responsables."
+                    href="{{ route('admin.aplicaciones.index') }}"
+                    icon="{{ asset('images/modules/aplicacion.png') }}" />
+
+                <x-admin.admin-card title="Asignación Automática"
+                    description="Configuración de grupos responsables por subcategoría."
+                    href="{{ route('admin.asignaciones.index') }}"
+                    icon="{{ asset('images/modules/asignacion.png') }}" />
+
+                <x-admin.admin-card title="ANS" description="Acuerdos de Nivel de Servicio."
+                    href="{{ route('admin.ans.index') }}" icon="{{ asset('images/modules/ans.png') }}" />
+
+                <x-admin.admin-card title="Terceros" description="Proveedores y aliados externos."
+                    href="{{ route('admin.terceros.index') }}" icon="{{ asset('images/modules/tercero.png') }}" />
+
+                <x-admin.admin-card title="Flujos de Terceros" description="Escalamiento y atención con proveedores."
+                    href="{{ route('admin.flujos-terceros.index') }}"
+                    icon="{{ asset('images/modules/flujo-tercero.png') }}" />
+
             </div>
 
         </div>

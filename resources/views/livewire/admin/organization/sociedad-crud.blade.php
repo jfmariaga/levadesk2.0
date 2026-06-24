@@ -201,56 +201,64 @@
 
     </div>
 
-    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}">
+    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}" :title="$editingId ? 'Editar Sociedad' : 'Nueva Sociedad'"
+        subtitle="Información general de la sociedad">
 
         <div class="space-y-6" wire:key="form-{{ $editingId ?? 'new' }}">
 
-            <h2 class="text-xl font-bold">
+            <div class="rounded-2xl border border-slate-200 bg-white p-5">
 
-                {{ $editingId ? 'Editar' : 'Nueva' }}
-                Sociedad
+                <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
 
-            </h2>
+                    Información General
 
-            <x-ui.input wire:model.live="nombre" label="Nombre" />
+                </h3>
 
-            <x-ui.input wire:model.live="codigo" label="Código" />
+                <div class="space-y-4">
 
-            <x-ui.textarea wire:model.live="descripcion" label="Descripción" />
+                    <x-ui.input wire:model.live="nombre" label="Nombre" />
 
-            <div>
+                    <x-ui.input wire:model.live="codigo" label="Código" />
 
-                <label class="mb-2 block text-sm font-medium text-slate-700">
+                    <x-ui.textarea wire:model.live="descripcion" label="Descripción" />
 
-                    Estado
+                    <div>
 
-                </label>
+                        <label class="mb-2 block text-sm font-medium text-slate-700">
 
-                <select wire:model.live="estado" class="w-full rounded-2xl border border-slate-200 px-4 py-3">
+                            Estado
 
-                    <option value="0">
-                        Activo
-                    </option>
+                        </label>
 
-                    <option value="1">
-                        Inactivo
-                    </option>
+                        <select wire:model.live="estado" class="w-full rounded-2xl border border-slate-200 px-4 py-3">
 
-                </select>
+                            <option value="0">
+                                Activo
+                            </option>
+
+                            <option value="1">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="flex gap-3">
+            <div class="flex justify-end gap-3 border-t border-slate-200 pt-4">
 
-                <button wire:click="save" type="button" class="rounded-xl bg-primary px-4 py-2 text-white">
+                <button wire:click="closeDrawer" type="button" class="rounded-xl border border-slate-300 px-5 py-2">
 
-                    Guardar
+                    Cancelar
 
                 </button>
 
-                <button wire:click="closeDrawer" type="button" class="rounded-xl border px-4 py-2">
+                <button wire:click="save" type="button" class="rounded-xl bg-primary px-5 py-2 text-white">
 
-                    Cancelar
+                    Guardar
 
                 </button>
 

@@ -193,32 +193,42 @@
 
     </div>
 
-    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}">
+    <x-admin.crud-drawer :show="$showDrawer" wire:key="drawer-{{ $editingId ?? 'new' }}" :title="$editingId ? 'Editar Tipo de Solicitud' : 'Nuevo Tipo de Solicitud'"
+        subtitle="Configuración de tipos de solicitud">
 
         <div class="space-y-6" wire:key="form-{{ $editingId ?? 'new' }}">
 
-            <h2 class="text-xl font-bold">
+            {{-- INFORMACIÓN GENERAL --}}
+            <div class="rounded-2xl border border-slate-200 bg-white p-5">
 
-                {{ $editingId ? 'Editar' : 'Nuevo' }}
-                Tipo de Solicitud
+                <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
 
-            </h2>
+                    Información General
 
-            <x-ui.input wire:model.live="nombre" label="Nombre" />
+                </h3>
 
-            <x-ui.input wire:model.live="codigo" label="Código" />
+                <div class="space-y-4">
 
-            <div class="flex gap-3">
+                    <x-ui.input wire:model.live="nombre" label="Nombre" />
 
-                <button wire:click="save" type="button" class="rounded-xl bg-primary px-4 py-2 text-white">
+                    <x-ui.input wire:model.live="codigo" label="Código" />
 
-                    Guardar
+                </div>
+
+            </div>
+
+            {{-- ACCIONES --}}
+            <div class="flex justify-end gap-3 border-t border-slate-200 pt-4">
+
+                <button wire:click="closeDrawer" type="button" class="rounded-xl border border-slate-300 px-5 py-2">
+
+                    Cancelar
 
                 </button>
 
-                <button wire:click="closeDrawer" type="button" class="rounded-xl border px-4 py-2">
+                <button wire:click="save" type="button" class="rounded-xl bg-primary px-5 py-2 text-white">
 
-                    Cancelar
+                    Guardar
 
                 </button>
 

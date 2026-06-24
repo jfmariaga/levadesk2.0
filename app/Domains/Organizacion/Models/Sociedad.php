@@ -3,7 +3,7 @@
 namespace App\Domains\Organizacion\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Domains\Organizacion\Models\Aplicacion;
 class Sociedad extends Model
 {
     protected $table = 'sociedades';
@@ -27,5 +27,13 @@ class Sociedad extends Model
             'estado' => 'boolean',
 
         ];
+    }
+
+    public function aplicaciones()
+    {
+        return $this->hasMany(
+            Aplicacion::class,
+            'sociedad_id'
+        );
     }
 }
