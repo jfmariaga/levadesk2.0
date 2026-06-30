@@ -52,6 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         'email',
 
+        'email_verified_at',
+
         'password',
 
         'estado',
@@ -60,9 +62,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
         'area_id',
 
+        'area',
+
         'profile_photo',
 
         'en_vacaciones',
+
+        'aprobador_ti',
 
         'teams_webhook_url',
 
@@ -100,6 +106,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
             'en_vacaciones' => 'boolean',
 
+            'aprobador_ti' => 'boolean',
+
         ];
     }
 
@@ -114,10 +122,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Sociedad::class);
     }
 
-    public function areaRelacion()
+    public function areaRelacion(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Domains\Organizacion\Models\Area::class,
+            Area::class,
             'area_id',
             'id'
         );
@@ -192,6 +200,13 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function getAreaNombreAttribute(): string
+    {
+        return $this->areaRelacion?->nombre
+            ?? $this->area
+            ?? 'Sin área';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Teams
@@ -217,6 +232,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function estaEnVacaciones(): bool
     {
         return $this->en_vacaciones === true;
+    }
+
+    public function esAprobadorTi(): bool
+    {
+        return $this->aprobador_ti === true;
     }
 
     public function getFotoPerfilAttribute(): string

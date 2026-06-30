@@ -26,7 +26,11 @@
         {{-- CONTENT --}}
         <main class="relative z-20 mt-12 px-6 pb-12">
 
-            @yield('content')
+            @isset($slot)
+                {{ $slot }}
+            @else
+                @yield('content')
+            @endisset
 
         </main>
 

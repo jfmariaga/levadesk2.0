@@ -43,6 +43,15 @@
                 <x-admin.admin-card title="Sociedades" description="Gestión de sociedades y compañías."
                     href="{{ route('admin.sociedades.index') }}" icon="{{ asset('images/modules/sociedad.png') }}" />
 
+                <x-admin.admin-card title="Áreas" description="Gestión de áreas por sociedad."
+                    href="{{ route('admin.areas.index') }}" icon="{{ asset('images/modules/sociedad.png') }}" />
+
+                <x-admin.admin-card title="Usuarios" description="Administración de usuarios, roles y grupos."
+                    href="{{ route('admin.usuarios.index') }}" icon="{{ asset('images/modules/grupo.png') }}" />
+
+                <x-admin.admin-card title="Roles y Permisos" description="Administración de accesos del sistema."
+                    href="{{ route('admin.roles-permisos.index') }}" icon="{{ asset('images/modules/administracion.png') }}" />
+
                 <x-admin.admin-card title="Grupos" description="Equipos responsables de atención y soporte."
                     href="{{ route('admin.grupos.index') }}" icon="{{ asset('images/modules/grupo.png') }}" />
 

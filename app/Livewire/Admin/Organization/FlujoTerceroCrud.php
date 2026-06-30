@@ -87,12 +87,9 @@ class FlujoTerceroCrud extends Component
 
         $this->usuario_id = $flujo->usuario_id;
 
-        $this->destinatarios =
-            $flujo->destinatarios ?? '';
-
         $this->correos =
             json_decode(
-                $this->destinatarios,
+                $flujo->destinatarios ?? '[]',
                 true
             ) ?? [];
 
@@ -140,7 +137,7 @@ class FlujoTerceroCrud extends Component
                 $this->correos
             );
 
-        $this->dispatch('$refresh');
+        // $this->dispatch('$refresh');
     }
 
     public function eliminarCorreo(
@@ -170,17 +167,38 @@ class FlujoTerceroCrud extends Component
                 $this->correos
             );
 
-        $this->dispatch('$refresh');
+        // $this->dispatch('$refresh');
     }
 
     public function save(): void
     {
         $this->validate();
 
-        $this->destinatarios =
-            json_encode(
+        if (
+            count(
                 $this->correos
+            ) === 0
+        ) {
+
+            $this->addError(
+                'correos',
+                'Debe ingresar al menos un destinatario.'
             );
+
+            return;
+        }
+
+        if (
+            count($this->correos) === 0
+        ) {
+
+            $this->addError(
+                'correos',
+                'Debe ingresar al menos un destinatario.'
+            );
+
+            return;
+        }
         FlujoTercero::updateOrCreate(
 
             ['id' => $this->editingId],
@@ -193,7 +211,9 @@ class FlujoTerceroCrud extends Component
 
                 'usuario_id' => $this->usuario_id,
 
-                'destinatarios' => $this->destinatarios,
+                'destinatarios' => json_encode(
+                    $this->correos
+                ),
 
                 'activo' => $this->activo,
 
@@ -243,7 +263,7 @@ class FlujoTerceroCrud extends Component
 
         $this->usuario_id = null;
 
-        $this->destinatarios = '';
+        // $this->destinatarios = '';
 
         $this->nuevoCorreo = '';
 
@@ -274,27 +294,34 @@ class FlujoTerceroCrud extends Component
                         $this->search,
                         function ($query) {
 
-                            $query
+                            $query->where(
 
-                                ->whereHas(
-                                    'aplicacion',
-                                    fn($q) =>
-                                    $q->where(
-                                        'nombre',
-                                        'like',
-                                        "%{$this->search}%"
-                                    )
-                                )
+                                function ($q) {
 
-                                ->orWhereHas(
-                                    'tercero',
-                                    fn($q) =>
-                                    $q->where(
-                                        'nombre',
-                                        'like',
-                                        "%{$this->search}%"
-                                    )
-                                );
+                                    $q
+
+                                        ->whereHas(
+                                            'aplicacion',
+                                            fn($sub) =>
+                                            $sub->where(
+                                                'nombre',
+                                                'like',
+                                                "%{$this->search}%"
+                                            )
+                                        )
+
+                                        ->orWhereHas(
+                                            'tercero',
+                                            fn($sub) =>
+                                            $sub->where(
+                                                'nombre',
+                                                'like',
+                                                "%{$this->search}%"
+                                            )
+                                        );
+                                }
+
+                            );
                         }
                     )
 

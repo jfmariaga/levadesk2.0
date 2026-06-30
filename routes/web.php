@@ -10,16 +10,20 @@ use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Perfil\Perfil;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use App\Livewire\Admin\DashboardAdmin;
 use App\Livewire\Admin\Organization\SociedadCrud;
+use App\Livewire\Admin\Organization\AreaCrud;
+use App\Livewire\Admin\Organization\UsuarioCrud;
 use App\Livewire\Admin\Organization\GrupoCrud;
 use App\Livewire\Admin\Organization\AplicacionCrud;
 use App\Livewire\Admin\Organization\FlujoTerceroCrud;
 use App\Livewire\Admin\Organization\TerceroCrud;
+use App\Livewire\Admin\Security\RolPermisoCrud;
 use App\Livewire\Admin\Workflow\AsignacionSubcategoria;
 use App\Livewire\Admin\SLA\AnsCrud;
 
@@ -133,73 +137,98 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
 
     Route::get(
-        '/administracion',
-        DashboardAdmin::class
-    )->name('admin.dashboard');
+        '/perfil',
+        Perfil::class
+    )->name('perfil');
 
-    Route::get(
-        '/administracion/tipos-solicitud',
-        TipoSolicitudCrud::class
-    )->name('admin.tipos-solicitud.index');
+    Route::middleware(['role:Admin'])
+        ->prefix('administracion')
+        ->name('admin.')
+        ->group(function () {
 
+            Route::get(
+                '/',
+                DashboardAdmin::class
+            )->name('dashboard');
 
-    Route::get(
-        '/administracion/categorias',
-        CategoriaCrud::class
-    )->name('admin.categorias.index');
+            Route::get(
+                '/tipos-solicitud',
+                TipoSolicitudCrud::class
+            )->name('tipos-solicitud.index');
 
-    Route::get(
-        '/administracion/subcategorias',
-        SubcategoriaCrud::class
-    )->name('admin.subcategorias.index');
+            Route::get(
+                '/categorias',
+                CategoriaCrud::class
+            )->name('categorias.index');
 
-    Route::get(
-        '/administracion/estados',
-        EstadoCrud::class
-    )->name('admin.estados.index');
+            Route::get(
+                '/subcategorias',
+                SubcategoriaCrud::class
+            )->name('subcategorias.index');
 
-    Route::get(
-        '/administracion/urgencias',
-        UrgenciaCrud::class
-    )->name('admin.urgencias.index');
+            Route::get(
+                '/estados',
+                EstadoCrud::class
+            )->name('estados.index');
 
-    Route::get(
-        '/administracion/impactos',
-        ImpactoCrud::class
-    )->name('admin.impactos.index');
+            Route::get(
+                '/urgencias',
+                UrgenciaCrud::class
+            )->name('urgencias.index');
 
-    Route::get(
-        '/administracion/sociedades',
-        SociedadCrud::class
-    )->name('admin.sociedades.index');
+            Route::get(
+                '/impactos',
+                ImpactoCrud::class
+            )->name('impactos.index');
 
-    Route::get(
-        '/administracion/grupos',
-        GrupoCrud::class
-    )->name('admin.grupos.index');
+            Route::get(
+                '/sociedades',
+                SociedadCrud::class
+            )->name('sociedades.index');
 
-    Route::get(
-        '/administracion/aplicaciones',
-        AplicacionCrud::class
-    )->name('admin.aplicaciones.index');
+            Route::get(
+                '/areas',
+                AreaCrud::class
+            )->name('areas.index');
 
-    Route::get(
-        '/administracion/asignaciones',
-        AsignacionSubcategoria::class
-    )->name('admin.asignaciones.index');
+            Route::get(
+                '/usuarios',
+                UsuarioCrud::class
+            )->name('usuarios.index');
 
-    Route::get(
-        '/administracion/ans',
-        AnsCrud::class
-    )->name('admin.ans.index');
+            Route::get(
+                '/roles-permisos',
+                RolPermisoCrud::class
+            )->name('roles-permisos.index');
 
-    Route::get(
-        '/administracion/terceros',
-        TerceroCrud::class
-    )->name('admin.terceros.index');
+            Route::get(
+                '/grupos',
+                GrupoCrud::class
+            )->name('grupos.index');
 
-    Route::get(
-        '/administracion/flujos-terceros',
-        FlujoTerceroCrud::class
-    )->name('admin.flujos-terceros.index');
+            Route::get(
+                '/aplicaciones',
+                AplicacionCrud::class
+            )->name('aplicaciones.index');
+
+            Route::get(
+                '/asignaciones',
+                AsignacionSubcategoria::class
+            )->name('asignaciones.index');
+
+            Route::get(
+                '/ans',
+                AnsCrud::class
+            )->name('ans.index');
+
+            Route::get(
+                '/terceros',
+                TerceroCrud::class
+            )->name('terceros.index');
+
+            Route::get(
+                '/flujos-terceros',
+                FlujoTerceroCrud::class
+            )->name('flujos-terceros.index');
+        });
 });

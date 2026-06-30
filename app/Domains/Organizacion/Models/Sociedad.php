@@ -3,7 +3,9 @@
 namespace App\Domains\Organizacion\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Domains\Organizacion\Models\Aplicacion;
+
 class Sociedad extends Model
 {
     protected $table = 'sociedades';
@@ -33,6 +35,14 @@ class Sociedad extends Model
     {
         return $this->hasMany(
             Aplicacion::class,
+            'sociedad_id'
+        );
+    }
+
+    public function areas(): HasMany
+    {
+        return $this->hasMany(
+            Area::class,
             'sociedad_id'
         );
     }

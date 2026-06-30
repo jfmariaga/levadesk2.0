@@ -68,7 +68,7 @@
                 class="rounded-full border-2 border-white/20 transition hover:border-white/50">
 
                 <img
-                    src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->nombre_completo) }}&background=1E3A8A&color=ffffff&size=128"
+                    src="{{ auth()->user()->foto_perfil }}"
                     class="h-12 w-12 rounded-full object-cover">
 
             </button>
@@ -103,6 +103,17 @@
                                 {{ auth()->user()->roles->first()?->name }}
 
                             </span>
+
+                            <a href="{{ route('perfil') }}"
+                                class="rounded-full bg-white px-3 py-1 text-[11px] font-medium text-primary transition hover:bg-primary hover:text-white">
+
+                                Mi perfil
+
+                            </a>
+
+                        </div>
+
+                        <div class="mt-3 flex justify-end">
 
                             <form
                                 method="POST"
